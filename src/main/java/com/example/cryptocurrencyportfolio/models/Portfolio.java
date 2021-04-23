@@ -1,9 +1,7 @@
 package com.example.cryptocurrencyportfolio.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -13,25 +11,27 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class Portfolio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(updatable = false)
     public Long id;
 
+    @NotBlank(message = "Currency is required")
     public String currency;
 
     @Positive(message = "Only positive number accepted")
     private double amount;
 
-    private LocalDateTime dateOfPurchase;
+    private String dateOfPurchase;
 
     @NotBlank(message = "Wallet location is required")
-    private String WalletLocation;
+    private String walletLocation;
 
-    @Column(updatable = false)
-    private BigDecimal valueEuro;
+    private BigDecimal euroValue;
+
+    private BigDecimal currentEuroValue;
+
+    private BigDecimal profit_lost_EuroValue;
 }

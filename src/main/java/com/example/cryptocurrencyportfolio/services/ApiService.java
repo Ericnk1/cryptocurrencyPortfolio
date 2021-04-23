@@ -18,12 +18,37 @@ public class ApiService {
     public double convertToEur(String currency) throws IOException {
 
 
-        if (currency.equals("Bitcoin")) {
-            currency = "BTC";
-        } else if (currency.equals("Ethereum")) {
-            currency = "ETH";
-        } else if (currency.equals("Ripple")) {
-            currency = "XRP";
+        switch (currency) {
+            case "Bitcoin":
+                currency = "BTC";
+                break;
+            case "Ethereum":
+                currency = "ETH";
+                break;
+            case "Ripple":
+                currency = "XRP";
+                break;
+            case "Litecoin":
+                currency = "LTC";
+                break;
+            case "Bitcoin SV":
+                currency = "BSV";
+                break;
+            case "EOS":
+                currency = "EOS";
+                break;
+            case "Stellar":
+                currency = "XLM";
+                break;
+            case "TRON":
+                currency = "TRX";
+                break;
+            case "Monero":
+                currency = "XMR";
+                break;
+            case "Bitcoin Cash":
+                currency = "BCH";
+                break;
         }
 
         String inputJson = "{\"ccy1\":\"" + currency + "\",\"ccy2\":\"EUR\"}";

@@ -1,16 +1,14 @@
 package com.example.cryptocurrencyportfolio.controllers;
 
 import com.example.cryptocurrencyportfolio.models.Portfolio;
+import com.example.cryptocurrencyportfolio.repositories.PortfolioRepository;
 import com.example.cryptocurrencyportfolio.services.PortfolioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,16 +19,17 @@ public class PortfolioController {
     @Autowired
     PortfolioService portfolioService;
 
+    @Autowired
+    PortfolioRepository portfolioRepository;
+
     @PostMapping
     public ResponseEntity<String> createNewEntry(@RequestBody Portfolio portfolio) throws IOException {
         portfolioService.addNewEntry(portfolio);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Portfolio> getAllEntries() {
+    public List<Portfolio> getAllEntries() throws Exception {
         return portfolioService.getAllPortfolio();
     }
 
@@ -41,13 +40,14 @@ public class PortfolioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteEntry(@PathVariable Long id) {
+    public ResponseEntity<String> deleteEntry(@PathVariable Long id) throws Exception {
         portfolioService.deleteEntry(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/res/{id}")
-    public Optional<Portfolio> findEntryById(@PathVariable("id") Long id){
+    @GetMapping("/{id}")
+    public Optional<Portfolio> findEntryById(@PathVariable("id") Long id) throws Exception {
         return portfolioService.findPortfolioById(id);
     }
+
 }

@@ -16,19 +16,19 @@ public interface PortfolioService {
      void addNewEntry(Portfolio portfolio) throws IOException;
 
     /**
-     * To find admin by id
+     * To find portfolio by id
      *
      * @param id Portfolio id
      * @return optional of portfolio
      */
-     Optional<Portfolio> findPortfolioById(Long id);
+     Optional<Portfolio> findPortfolioById(Long id) throws Exception;
 
     /**
      * To delete portfolio by id
      *
      * @param id Portfolio id
      */
-     void deleteEntry(Long id);
+     void deleteEntry(Long id) throws Exception;
 
     /**
      * To update an existing portfolio
@@ -42,7 +42,13 @@ public interface PortfolioService {
      *
      * @return list of portfolios
      */
-     List<Portfolio> getAllPortfolio();
+     List<Portfolio> getAllPortfolio() throws Exception;
+
+
+    /**
+     * List of portfolios with the updated value
+     */
+    void updateAllCurrentValue() throws Exception;
 
 
 }
