@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/portfolio")
 public class PortfolioController {
@@ -49,5 +50,10 @@ public class PortfolioController {
     public Optional<Portfolio> findEntryById(@PathVariable("id") Long id) throws Exception {
         return portfolioService.findPortfolioById(id);
     }
+
+    /*@GetMapping("/sum")
+    public void sumOfAllCurrentValue() throws Exception {
+        portfolioService.sumOfAllCurrentValue();
+    }*/
 
 }

@@ -33,5 +33,5 @@ public class Portfolio {
 
     private BigDecimal currentEuroValue;
 
-    private BigDecimal profit_lost_EuroValue;
+    private BigDecimal profitLostEuroValue;
 }

@@ -3,6 +3,7 @@ package com.example.cryptocurrencyportfolio.services;
 import com.example.cryptocurrencyportfolio.models.Portfolio;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +50,9 @@ public interface PortfolioService {
      * List of portfolios with the updated value
      */
     void updateAllCurrentValue() throws Exception;
+
+
+    // BigDecimal sumOfAllCurrentValue() throws Exception;
 
 
 }

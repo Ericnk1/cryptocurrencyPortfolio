@@ -20,19 +20,21 @@ public class PortfolioServiceImpl implements PortfolioService {
     @Autowired
     private PortfolioRepository portfolioRepository;
 
+    @Autowired
+    private ApiService apiService;
+
     @Override
     public void addNewEntry(Portfolio portfolio) throws IOException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         portfolio.setDateOfPurchase(formatter.format(date));
 
-        ApiService apiService = new ApiService();
         portfolio.setEuroValue(BigDecimal.valueOf(portfolio.getAmount() * apiService.convertToEur(portfolio.getCurrency())));
 
         ApiService apiService1 = new ApiService();
         portfolio.setCurrentEuroValue(BigDecimal.valueOf(portfolio.getAmount() * apiService1.convertToEur(portfolio.getCurrency())));
 
-        portfolio.setProfit_lost_EuroValue(portfolio.getCurrentEuroValue().subtract(portfolio.getEuroValue()));
+        portfolio.setProfitLostEuroValue(portfolio.getCurrentEuroValue().subtract(portfolio.getEuroValue()));
 
         portfolioRepository.save(portfolio);
     }
@@ -50,18 +52,16 @@ public class PortfolioServiceImpl implements PortfolioService {
 
     @Override
     public void updateEntry(Portfolio portfolio) throws IOException {
-        ApiService apiService = new ApiService();
         BigDecimal bigDecimal = BigDecimal.valueOf(portfolio.getAmount() * apiService.convertToEur(portfolio.getCurrency()));
         portfolio.setEuroValue(bigDecimal);
 
-        ApiService apiService1 = new ApiService();
-        portfolio.setCurrentEuroValue(BigDecimal.valueOf(portfolio.getAmount() * apiService1.convertToEur(portfolio.getCurrency())));
+        portfolio.setCurrentEuroValue(BigDecimal.valueOf(portfolio.getAmount() * apiService.convertToEur(portfolio.getCurrency())));
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
 
         portfolio.setDateOfPurchase(formatter.format(date));
-        portfolio.setProfit_lost_EuroValue(portfolio.getCurrentEuroValue().subtract(portfolio.getEuroValue()));
+        portfolio.setProfitLostEuroValue(portfolio.getCurrentEuroValue().subtract(portfolio.getEuroValue()));
         portfolioRepository.saveAndFlush(portfolio);
 
     }
@@ -73,14 +73,18 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
 
     public void updateAllCurrentValue() throws Exception {
-        ApiService apiService = new ApiService();
 
         for (Portfolio portfolio : portfolioRepository.findAll()) {
             BigDecimal value = BigDecimal.valueOf(portfolio.getAmount() * apiService.convertToEur(portfolio.getCurrency()));
             portfolio.setCurrentEuroValue(value);
-            portfolio.setProfit_lost_EuroValue(portfolio.getCurrentEuroValue().subtract(portfolio.getEuroValue()));
+            portfolio.setProfitLostEuroValue(portfolio.getCurrentEuroValue().subtract(portfolio.getEuroValue()));
             portfolioRepository.saveAndFlush(portfolio);
         }
     }
+
+    /*public BigDecimal sumOfAllCurrentValue() throws Exception {
+        BigDecimal sum = getAllPortfolio().stream().map(Portfolio::getCurrentEuroValue).reduce(BigDecimal.ZERO, BigDecimal::add);
+        return sum;
+    }*/
 
 }
