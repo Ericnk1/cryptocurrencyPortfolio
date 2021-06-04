@@ -100,6 +100,8 @@
                         <exclude>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
+                            <source>11</source>
+                            <target>11</target>
                         </exclude>
                     </excludes>
                 </configuration>
