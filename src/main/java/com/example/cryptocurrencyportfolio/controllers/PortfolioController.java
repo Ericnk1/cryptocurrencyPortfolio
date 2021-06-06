@@ -12,8 +12,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-//@CrossOrigin(origins = "*", allowedHeaders = "*")
-@CrossOrigin(origins = "https://cryptocurrency-portfolio-web.herokuapp.com/")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/portfolio")
 public class PortfolioController {
