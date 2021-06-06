@@ -12,16 +12,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "https://cryptocurrency-portfolio-web.herokuapp.com/")
 @RestController
 @RequestMapping("/portfolio")
 public class PortfolioController {
 
     @Autowired
     PortfolioService portfolioService;
-
-    @Autowired
-    PortfolioRepository portfolioRepository;
 
     @PostMapping
     public ResponseEntity<String> createNewEntry(@RequestBody Portfolio portfolio) throws IOException {
@@ -51,9 +49,5 @@ public class PortfolioController {
         return portfolioService.findPortfolioById(id);
     }
 
-    /*@GetMapping("/sum")
-    public void sumOfAllCurrentValue() throws Exception {
-        portfolioService.sumOfAllCurrentValue();
-    }*/
 
 }
